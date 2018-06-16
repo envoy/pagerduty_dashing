@@ -1,7 +1,7 @@
 {
     "name": "PagerDuty Dashing",
     "description": "A simple Dashing dashboard for PagerDuty Incidents and On-call",
-    "repository": "https://github.com/thegreenrobot/pagerduty_dashing",
+    "repository": "https://github.com/envoy/pagerduty_dashing",
     "keywords": [
         "dashing pagerduty"
     ],
