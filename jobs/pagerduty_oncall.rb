@@ -17,19 +17,17 @@ SCHEDULER.every '30s' do
     conn = Faraday.new(url: "#{url}") do |faraday|
       faraday.request :url_encoded
       faraday.adapter Faraday.default_adapter
-      faraday.headers['Content-type'] = 'application/json'
+      # faraday.headers['Content-type'] = 'application/json'
       faraday.headers['Authorization'] = "Token token=#{api_key}"
+      faraday.headers['Accept'] = 'application/vnd.pagerduty+json;version=2'
       faraday.params['since'] = Time.now.utc.iso8601
       faraday.params['until'] = (Time.now.utc + 60).iso8601
     end
 
-    response = conn.get "/api/v1/schedules/#{value}/entries"
-    if response.status == 200
-      schedule_result = JSON.parse(response.body)
-      user_name = schedule_result['entries'][0]['user']['name']
-    else
-      user_name = 'John Doe'
-    end
+    oncalls = conn.get '/oncalls', {'schedule_ids' => [value] }
+    oncalls_hash = JSON.parse(oncalls.body)
+
+    user_name = oncalls_hash['oncalls'][0]['user']['summary']
 
     send_event("#{key}-name", text: user_name)
   end
