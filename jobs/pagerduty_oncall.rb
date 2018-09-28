@@ -17,7 +17,7 @@ SCHEDULER.every '30s' do
     conn = Faraday.new(url: "#{url}") do |faraday|
       faraday.request :url_encoded
       faraday.adapter Faraday.default_adapter
-      # faraday.headers['Content-type'] = 'application/json'
+      faraday.headers['Content-type'] = 'application/json'
       faraday.headers['Authorization'] = "Token token=#{api_key}"
       faraday.headers['Accept'] = 'application/vnd.pagerduty+json;version=2'
       faraday.params['since'] = Time.now.utc.iso8601
