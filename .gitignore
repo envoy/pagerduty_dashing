@@ -1,2 +1,4 @@
 history.yml
 .rvmrc
+.direnv
+.envrc
